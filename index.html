@@ -1,1 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>HomeXpert</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Syne:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --card: #13131a;
+    --card2: #1a1a24;
+    --accent: #ff6b35;
+    --accent2: #ff9a00;
+    --green: #00d68f;
+    --text: #f0f0f8;
+    --muted: #7a7a9a;
+    --border: rgba(255,255,255,0.07);
+    --nav-h: 70px;
+  }
 
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    max-width: 430px;
+    margin: 0 auto;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  h1, h2, h3 { font-family: 'Clash Display', sans-serif; }
+
+  /* SCREENS */
+  .screen { display: none; min-height: 100vh; padding-bottom: calc(var(--nav-h) + 16px); animation: fadeUp 0.35s ease; }
+  .screen.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SCROLLABLE CONTENT */
+  .scroll-area { overflow-y: auto; }
+
+  /* ── HOME ── */
+  .home-header {
+    padding: 52px 20px 20px;
+    background: linear-gradient(160deg, #1a1230 0%, var(--bg) 70%);
+    position: relative;
+    overflow: hidden;
+  }
+  .home-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(255,107,53,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .greeting { font-size: 13px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  .greeting span { color: var(--accent); font-weight: 600; }
+  .home-title { font-size: 28px; font-weight: 700; line-height: 1.15; margin-top: 6px; }
+  .home-title em { color: var(--accent); font-style: normal; }
+
+  .search-bar {
+    margin: 20px 20px 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    padding: 13px 16px;
+    gap: 10px;
+  }
+  .search-bar input {
+    flex: 1; background: none; border: none; outline: none;
+    color: var(--text); font-family: 'Syne', sans-serif; font-size: 14px;
+  }
+  .search-bar input::placeholder { color: var(--muted); }
+  .search-icon { font-size: 16px; color: var(--muted); }
+
+  .section-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 20px 12px;
+  }
+  .section-title { font-size: 17px; font-weight: 600; }
+  .see-all { font-size: 12px; color: var(--accent); cursor: pointer; letter-spacing: 0.04em; }
+
+  /* CATEGORY CHIPS */
+  .chips-scroll { display: flex; gap: 10px; padding: 0 20px 4px; overflow-x: auto; scrollbar-width: none; }
+  .chips-scroll::-webkit-scrollbar { display: none; }
+  .chip {
+    flex-shrink: 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 8px 16px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .chip.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+
+  /* SERVICE CARDS HORIZONTAL */
+  .cards-scroll { display: flex; gap: 14px; padding: 4px 20px 8px; overflow-x: auto; scrollbar-width: none; }
+  .cards-scroll::-webkit-scrollbar { display: none; }
+  .service-card-h {
+    flex-shrink: 0;
+    width: 160px;
+    background: var(--card);
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .service-card-h:active { transform: scale(0.96); }
+  .card-img {
+    height: 100px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px;
+    position: relative;
+  }
+  .card-img.orange { background: linear-gradient(135deg, #ff6b35 0%, #ff9a00 100%); }
+  .card-img.blue { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+  .card-img.green { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+  .card-img.purple { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
+  .card-img.red { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+  .card-img.yellow { background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%); }
+
+  .card-body { padding: 10px 12px 12px; }
+  .card-name { font-size: 13px; font-weight: 600; font-family: 'Clash Display', sans-serif; }
+  .card-price { font-size: 12px; color: var(--accent); margin-top: 3px; font-weight: 600; }
+
+  /* PROMO BANNER */
+  .promo {
+    margin: 8px 20px 0;
+    background: linear-gradient(120deg, #ff6b35, #ff9a00);
+    border-radius: 18px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .promo::after {
+    content: '🏠';
+    position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+    font-size: 52px; opacity: 0.25;
+  }
+  .promo-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; opacity: 0.85; text-transform: uppercase; }
+  .promo-text { font-size: 20px; font-weight: 700; font-family: 'Clash Display', sans-serif; margin-top: 4px; line-height: 1.2; }
+  .promo-btn {
+    margin-top: 12px;
+    background: rgba(255,255,255,0.2);
+    border: none; color: #fff;
+    padding: 8px 18px; border-radius: 30px;
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+    cursor: pointer; backdrop-filter: blur(4px);
+  }
+
+  /* ── SERVICES/CATALOG ── */
+  .catalog-header {
+    padding: 52px 20px 16px;
+    background: linear-gradient(160deg, #0d1a24 0%, var(--bg) 70%);
+  }
+  .catalog-title { font-size: 26px; font-weight: 700; }
+  .catalog-sub { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+  .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 8px 20px; }
+  .service-tile {
+    background: var(--card);
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .service-tile:active { transform: scale(0.95); }
+  .tile-img {
+    height: 90px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+  }
+  .tile-body { padding: 10px 12px 12px; }
+  .tile-name { font-size: 13px; font-weight: 600; font-family: 'Clash Display', sans-serif; }
+  .tile-desc { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+  .tile-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+  .tile-price { font-size: 14px; font-weight: 700; color: var(--accent); }
+  .tile-add {
+    width: 28px; height: 28px;
+    background: var(--accent);
+    border: none; border-radius: 8px;
+    color: #fff; font-size: 18px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: transform 0.15s;
+  }
+  .tile-add:active { transform: scale(0.88); }
+
+  /* ── CART ── */
+  .cart-header {
+    padding: 52px 20px 16px;
+  }
+  .cart-title { font-size: 26px; font-weight: 700; }
+
+  .cart-empty {
+    text-align: center; padding: 60px 20px;
+  }
+  .cart-empty-icon { font-size: 60px; margin-bottom: 16px; }
+  .cart-empty h3 { font-size: 18px; color: var(--muted); }
+  .cart-empty p { font-size: 13px; color: var(--muted); margin-top: 6px; opacity: 0.6; }
+
+  .cart-items { padding: 0 20px; }
+  .cart-item {
+    background: var(--card);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 14px;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 12px;
+  }
+  .cart-item-icon {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; flex-shrink: 0;
+  }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-size: 14px; font-weight: 600; font-family: 'Clash Display', sans-serif; }
+  .cart-item-price { font-size: 13px; color: var(--accent); margin-top: 2px; font-weight: 600; }
+  .qty-controls { display: flex; align-items: center; gap: 10px; }
+  .qty-btn {
+    width: 28px; height: 28px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-size: 16px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+  }
+  .qty-num { font-size: 14px; font-weight: 700; min-width: 16px; text-align: center; }
+
+  .cart-summary {
+    margin: 8px 20px 0;
+    background: var(--card);
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    padding: 18px;
+  }
+  .summary-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .summary-label { font-size: 13px; color: var(--muted); }
+  .summary-value { font-size: 13px; font-weight: 600; }
+  .summary-divider { height: 1px; background: var(--border); margin: 10px 0; }
+  .summary-total-label { font-size: 15px; font-weight: 700; font-family: 'Clash Display', sans-serif; }
+  .summary-total-value { font-size: 18px; font-weight: 700; color: var(--accent); font-family: 'Clash Display', sans-serif; }
+
+  .order-btn {
+    margin: 16px 20px 0;
+    width: calc(100% - 40px);
+    background: linear-gradient(120deg, var(--accent), var(--accent2));
+    border: none; border-radius: 16px;
+    color: #fff; font-family: 'Clash Display', sans-serif;
+    font-size: 16px; font-weight: 700;
+    padding: 17px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 8px 24px rgba(255,107,53,0.35);
+    display: block;
+  }
+  .order-btn:active { transform: scale(0.97); }
+
+  /* ── PROFILE ── */
+  .profile-header {
+    padding: 52px 20px 24px;
+    text-align: center;
+    background: linear-gradient(160deg, #1a1230 0%, var(--bg) 70%);
+  }
+  .avatar {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 24px;
+    margin: 0 auto 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+    box-shadow: 0 8px 24px rgba(255,107,53,0.3);
+  }
+  .profile-name { font-size: 22px; font-weight: 700; }
+  .profile-email { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  .stats-row {
+    display: flex; gap: 12px; padding: 0 20px; margin-bottom: 8px;
+  }
+  .stat-card {
+    flex: 1;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+  .stat-num { font-size: 22px; font-weight: 700; font-family: 'Clash Display', sans-serif; color: var(--accent); }
+  .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .menu-list { padding: 8px 20px; }
+  .menu-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 15px 16px;
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .menu-item:active { background: var(--card2); }
+  .menu-icon { font-size: 20px; width: 36px; text-align: center; }
+  .menu-label { flex: 1; font-size: 14px; font-weight: 500; }
+  .menu-arrow { color: var(--muted); font-size: 16px; }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 430px;
+    background: rgba(13,13,20,0.92);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    display: flex;
+    height: var(--nav-h);
+    z-index: 100;
+    padding: 0 8px;
+  }
+  .nav-item {
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .nav-icon { font-size: 22px; transition: transform 0.2s; }
+  .nav-label { font-size: 10px; color: var(--muted); transition: color 0.2s; letter-spacing: 0.04em; }
+  .nav-item.active .nav-label { color: var(--accent); font-weight: 700; }
+  .nav-item.active .nav-icon { transform: translateY(-2px); }
+
+  .nav-dot {
+    position: absolute; top: 10px; right: calc(50% - 18px);
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: none;
+  }
+  .nav-dot.show { display: block; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: calc(var(--nav-h) + 16px);
+    left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--green);
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 700;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 200;
+    white-space: nowrap;
+    max-width: 90vw;
+    text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- SCREEN: HOME -->
+<div class="screen active" id="screen-home">
+  <div class="home-header">
+    <div class="greeting">Welcome back, <span>Customer</span> 👋</div>
+    <h1 class="home-title">What service do<br>you need <em>today?</em></h1>
+  </div>
+
+  <div class="search-bar">
+    <span class="search-icon">🔍</span>
+    <input type="text" placeholder="Search services...">
+  </div>
+
+  <div class="promo" style="margin-top:20px;">
+    <div class="promo-tag">Limited Offer</div>
+    <div class="promo-text">20% Off Your<br>First Order!</div>
+    <button class="promo-btn" onclick="goTo('catalog')">Book Now →</button>
+  </div>
+
+  <div class="section-header">
+    <span class="section-title">Categories</span>
+  </div>
+  <div class="chips-scroll">
+    <div class="chip active">All</div>
+    <div class="chip">Cleaning</div>
+    <div class="chip">Repair</div>
+    <div class="chip">Plumbing</div>
+    <div class="chip">Electric</div>
+    <div class="chip">Painting</div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-title">Popular Services</span>
+    <span class="see-all" onclick="goTo('catalog')">See All →</span>
+  </div>
+  <div class="cards-scroll">
+    <div class="service-card-h" onclick="quickAdd('🧹','Deep Cleaning','₹799')">
+      <div class="card-img orange">🧹</div>
+      <div class="card-body">
+        <div class="card-name">Deep Cleaning</div>
+        <div class="card-price">₹799</div>
+      </div>
+    </div>
+    <div class="service-card-h" onclick="quickAdd('🔧','AC Repair','₹599')">
+      <div class="card-img blue">🔧</div>
+      <div class="card-body">
+        <div class="card-name">AC Repair</div>
+        <div class="card-price">₹599</div>
+      </div>
+    </div>
+    <div class="service-card-h" onclick="quickAdd('🚿','Plumbing Fix','₹449')">
+      <div class="card-img green">🚿</div>
+      <div class="card-body">
+        <div class="card-name">Plumbing Fix</div>
+        <div class="card-price">₹449</div>
+      </div>
+    </div>
+    <div class="service-card-h" onclick="quickAdd('⚡','Electrician','₹349')">
+      <div class="card-img yellow">⚡</div>
+      <div class="card-body">
+        <div class="card-name">Electrician</div>
+        <div class="card-price">₹349</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: CATALOG -->
+<div class="screen" id="screen-catalog">
+  <div class="catalog-header">
+    <h2 class="catalog-title">Our Services</h2>
+    <p class="catalog-sub">Professional home services at your doorstep</p>
+  </div>
+
+  <div class="chips-scroll" style="margin-bottom:12px;">
+    <div class="chip active">All</div>
+    <div class="chip">Cleaning</div>
+    <div class="chip">Repair</div>
+    <div class="chip">Plumbing</div>
+  </div>
+
+  <div class="service-grid">
+    <div class="service-tile">
+      <div class="tile-img orange">🧹</div>
+      <div class="tile-body">
+        <div class="tile-name">Deep Cleaning</div>
+        <div class="tile-desc">Full home deep clean, 4–6 hrs</div>
+        <div class="tile-footer">
+          <span class="tile-price">₹799</span>
+          <button class="tile-add" onclick="addToCart('🧹','Deep Cleaning','₹799',799)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="service-tile">
+      <div class="tile-img blue">🔧</div>
+      <div class="tile-body">
+        <div class="tile-name">AC Repair</div>
+        <div class="tile-desc">Diagnosis + gas refill</div>
+        <div class="tile-footer">
+          <span class="tile-price">₹599</span>
+          <button class="tile-add" onclick="addToCart('🔧','AC Repair','₹599',599)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="service-tile">
+      <div class="tile-img green">🚿</div>
+      <div class="tile-body">
+        <div class="tile-name">Plumbing Fix</div>
+        <div class="tile-desc">Leaks, pipes, taps</div>
+        <div class="tile-footer">
+          <span class="tile-price">₹449</span>
+          <button class="tile-add" onclick="addToCart('🚿','Plumbing Fix','₹449',449)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="service-tile">
+      <div class="tile-img yellow">⚡</div>
+      <div class="tile-body">
+        <div class="tile-name">Electrician</div>
+        <div class="tile-desc">Wiring, switches, fans</div>
+        <div class="tile-footer">
+          <span class="tile-price">₹349</span>
+          <button class="tile-add" onclick="addToCart('⚡','Electrician','₹349',349)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="service-tile">
+      <div class="tile-img purple">🎨</div>
+      <div class="tile-body">
+        <div class="tile-name">Painting</div>
+        <div class="tile-desc">Interior wall painting</div>
+        <div class="tile-footer">
+          <span class="tile-price">₹1,299</span>
+          <button class="tile-add" onclick="addToCart('🎨','Painting','₹1,299',1299)">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="service-tile">
+      <div class="tile-img red">🛋️</div>
+      <div class="tile-body">
+        <div class="tile-name">Sofa Cleaning</div>
+        <div class="tile-desc">Steam + dry clean</div>
+        <div class="tile-footer">
+          <span class="tile-price">₹499</span>
+          <button class="tile-add" onclick="addToCart('🛋️','Sofa Cleaning','₹499',499)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: CART -->
+<div class="screen" id="screen-cart">
+  <div class="cart-header">
+    <h2 class="cart-title">Your Order</h2>
+  </div>
+
+  <div id="cart-empty" class="cart-empty">
+    <div class="cart-empty-icon">🛒</div>
+    <h3>Cart is empty</h3>
+    <p>Add services to get started</p>
+  </div>
+
+  <div id="cart-content" style="display:none;">
+    <div class="cart-items" id="cart-items-list"></div>
+    <div class="cart-summary">
+      <div class="summary-row">
+        <span class="summary-label">Subtotal</span>
+        <span class="summary-value" id="subtotal">₹0</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Convenience Fee</span>
+        <span class="summary-value">₹29</span>
+      </div>
+      <div class="summary-divider"></div>
+      <div class="summary-row">
+        <span class="summary-total-label">Total</span>
+        <span class="summary-total-value" id="total-price">₹0</span>
+      </div>
+    </div>
+    <button class="order-btn" onclick="placeOrder()">Confirm Booking →</button>
+  </div>
+</div>
+
+<!-- SCREEN: PROFILE -->
+<div class="screen" id="screen-profile">
+  <div class="profile-header">
+    <div class="avatar">👤</div>
+    <div class="profile-name">Rahul Sharma</div>
+    <div class="profile-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c3b1a2abb6af83a6bba2aeb3afa6eda0acae">[email&#160;protected]</a> • +91 98765 43210</div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num">12</div>
+      <div class="stat-label">Orders</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">4.9⭐</div>
+      <div class="stat-label">Rating</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">₹2.4k</div>
+      <div class="stat-label">Saved</div>
+    </div>
+  </div>
+
+  <div class="menu-list">
+    <div class="menu-item">
+      <span class="menu-icon">📋</span>
+      <span class="menu-label">Order History</span>
+      <span class="menu-arrow">›</span>
+    </div>
+    <div class="menu-item">
+      <span class="menu-icon">📍</span>
+      <span class="menu-label">Saved Addresses</span>
+      <span class="menu-arrow">›</span>
+    </div>
+    <div class="menu-item">
+      <span class="menu-icon">💳</span>
+      <span class="menu-label">Payment Methods</span>
+      <span class="menu-arrow">›</span>
+    </div>
+    <div class="menu-item">
+      <span class="menu-icon">🎁</span>
+      <span class="menu-label">Refer & Earn</span>
+      <span class="menu-arrow">›</span>
+    </div>
+    <div class="menu-item">
+      <span class="menu-icon">🔔</span>
+      <span class="menu-label">Notifications</span>
+      <span class="menu-arrow">›</span>
+    </div>
+    <div class="menu-item">
+      <span class="menu-icon">🚪</span>
+      <span class="menu-label">Logout</span>
+      <span class="menu-arrow">›</span>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="nav-item active" id="nav-home" onclick="goTo('home')">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">Home</span>
+  </div>
+  <div class="nav-item" id="nav-catalog" onclick="goTo('catalog')">
+    <span class="nav-icon">🛠️</span>
+    <span class="nav-label">Services</span>
+  </div>
+  <div class="nav-item" id="nav-cart" onclick="goTo('cart')">
+    <span class="nav-icon">🛒</span>
+    <span class="nav-label">Order</span>
+    <span class="nav-dot" id="cart-dot"></span>
+  </div>
+  <div class="nav-item" id="nav-profile" onclick="goTo('profile')">
+    <span class="nav-icon">👤</span>
+    <span class="nav-label">Profile</span>
+  </div>
+</nav>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  let cart = [];
+
+  function goTo(screen) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('screen-' + screen).classList.add('active');
+    document.getElementById('nav-' + screen).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  function addToCart(icon, name, priceStr, priceNum) {
+    const existing = cart.find(i => i.name === name);
+    if (existing) {
+      existing.qty++;
+    } else {
+      cart.push({ icon, name, priceStr, priceNum, qty: 1 });
+    }
+    updateCartUI();
+    showToast('✅ ' + name + ' added!');
+  }
+
+  function quickAdd(icon, name, priceStr) {
+    const priceNum = parseInt(priceStr.replace(/[₹,]/g, ''));
+    addToCart(icon, name, priceStr, priceNum);
+  }
+
+  function updateCartUI() {
+    const dot = document.getElementById('cart-dot');
+    const empty = document.getElementById('cart-empty');
+    const content = document.getElementById('cart-content');
+    const list = document.getElementById('cart-items-list');
+
+    if (cart.length === 0) {
+      dot.classList.remove('show');
+      empty.style.display = 'block';
+      content.style.display = 'none';
+      return;
+    }
+
+    dot.classList.add('show');
+    empty.style.display = 'none';
+    content.style.display = 'block';
+
+    list.innerHTML = cart.map((item, idx) => `
+      <div class="cart-item">
+        <div class="cart-item-icon ${getColor(idx)}">${item.icon}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">${item.priceStr} each</div>
+        </div>
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="changeQty(${idx}, -1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
+        </div>
+      </div>
+    `).join('');
+
+    const subtotal = cart.reduce((s, i) => s + i.priceNum * i.qty, 0);
+    document.getElementById('subtotal').textContent = '₹' + subtotal.toLocaleString('en-IN');
+    document.getElementById('total-price').textContent = '₹' + (subtotal + 29).toLocaleString('en-IN');
+  }
+
+  function getColor(idx) {
+    const colors = ['orange','blue','green','yellow','purple','red'];
+    return colors[idx % colors.length];
+  }
+
+  function changeQty(idx, delta) {
+    cart[idx].qty += delta;
+    if (cart[idx].qty <= 0) cart.splice(i
