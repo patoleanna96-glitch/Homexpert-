@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>HomeXpert - Home Services</title><link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>HomeXpert - Home Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --orange: #FF6B2B;
@@ -19,28 +20,44 @@
   }
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   body { font-family: 'Hind', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; max-width: 480px; margin: 0 auto; }
-  h1,h2,h3 { font-family.topbar { background: var(--bg2); padding: 16px 20px 12px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #2a2a2a; }
+  h1,h2,h3 { font-family: 'Baloo 2', cursive; }
+
+  /* TOP BAR */
+  .topbar { background: var(--bg2); padding: 16px 20px 12px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #2a2a2a; }
   .topbar-inner { display: flex; justify-content: space-between; align-items: center; }
   .logo { font-family: 'Baloo 2', cursive; font-size: 22px; font-weight: 800; color: var(--orange); }
   .logo span { color: var(--text); }
   .whatsapp-top { background: var(--green); color: white; border: none; border-radius: 20px; padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+
+  /* HERO */
   .hero { padding: 24px 20px 20px; background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); }
   .hero-tag { font-size: 12px; color: var(--orange); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
   .hero h1 { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 6px; }
   .hero h1 span { color: var(--orange); }
   .hero p { font-size: 14px; color: var(--text2); margin-bottom: 20px; }
+
+  /* SEARCH */
   .search-box { display: flex; align-items: center; background: var(--bg3); border-radius: 14px; padding: 12px 16px; gap: 10px; border: 1px solid #2a2a2a; }
   .search-box input { background: none; border: none; outline: none; color: var(--text); font-size: 15px; font-family: 'Hind', sans-serif; width: 100%; }
   .search-box input::placeholder { color: var(--text2); }
+
+  /* BANNER */
   .banner { margin: 16px 20px; background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%); border-radius: 18px; padding: 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
   .banner-text .tag { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; opacity: 0.85; margin-bottom: 4px; }
   .banner-text h2 { font-size: 22px; font-weight: 800; line-height: 1.2; }
-  .banner-text p { font-size: 13px; opacity: 0.85; margin-top: 4px; }.section { padding: 0 20px 20px; }
+  .banner-text p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+  .banner-btn { background: white; color: var(--orange); border: none; border-radius: 25px; padding: 10px 18px; font-weight: 700; font-size: 13px; cursor: pointer; white-space: nowrap; margin-top: 12px; display: inline-block; }
+  .banner-icon { font-size: 50px; opacity: 0.9; }
+
+  /* CATEGORIES */
+  .section { padding: 0 20px 20px; }
   .section-title { font-size: 18px; font-weight: 700; margin-bottom: 14px; }
   .cats { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
   .cats::-webkit-scrollbar { display: none; }
   .cat { background: var(--bg3); border: 1.5px solid #2a2a2a; border-radius: 25px; padding: 8px 16px; font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: all 0.2s; }
   .cat.active, .cat:active { background: var(--orange); border-color: var(--orange); color: white; }
+
+  /* SERVICES GRID */
   .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .service-card { background: var(--card); border-radius: 16px; overflow: hidden; cursor: pointer; transition: transform 0.2s; border: 1px solid #2a2a2a; }
   .service-card:active { transform: scale(0.97); }
@@ -51,6 +68,8 @@
   .service-info .old-price { font-size: 11px; color: var(--text2); text-decoration: line-through; margin-left: 4px; }
   .service-info .rating { font-size: 11px; color: var(--text2); margin-top: 4px; }
   .book-btn { display: block; width: 100%; background: var(--orange); color: white; border: none; border-radius: 10px; padding: 9px; font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 10px; font-family: 'Hind', sans-serif; }
+
+  /* HOW IT WORKS */
   .how { background: var(--bg2); margin: 0 20px 20px; border-radius: 18px; padding: 20px; }
   .how h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
   .step { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 14px; }
@@ -58,7 +77,11 @@
   .step-num { background: var(--orange); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex-shrink: 0; }
   .step-text h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
   .step-text p { font-size: 12px; color: var(--text2); }
+
+  /* WHATSAPP FLOAT */
   .wa-float { position: fixed; bottom: 24px; right: 20px; background: var(--green); color: white; border: none; border-radius: 50px; padding: 14px 20px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 20px rgba(37,211,102,0.4); z-index: 999; font-family: 'Hind', sans-serif; }
+
+  /* MODAL */
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: flex-end; }
   .modal-overlay.open { display: flex; }
   .modal { background: var(--bg2); border-radius: 24px 24px 0 0; padding: 24px 20px 32px; width: 100%; max-height: 90vh; overflow-y: auto; }
@@ -72,13 +95,20 @@
   .form-group textarea { height: 80px; resize: none; }
   .wa-submit { width: 100%; background: var(--green); color: white; border: none; border-radius: 14px; padding: 16px; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-family: 'Hind', sans-serif; margin-top: 8px; }
   .close-btn { background: var(--bg3); border: none; color: var(--text2); border-radius: 50%; width: 32px; height: 32px; font-size: 18px; cursor: pointer; float: right; margin-top: -4px; }
+
+  /* BOTTOM NAV */
   .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--bg2); border-top: 1px solid #2a2a2a; display: flex; padding: 10px 0 16px; z-index: 100; }
   .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
   .nav-item span { font-size: 10px; color: var(--text2); }
   .nav-item.active span { color: var(--orange); }
   .nav-icon { font-size: 22px; }
   .pb { padding-bottom: 90px; }
-</style><div class="topbar">
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
   <div class="topbar-inner">
     <div class="logo">Home<span>Xpert</span></div>
     <button class="whatsapp-top" onclick="openWhatsApp('Namaste! HomeXpert se baat karna chahta hoon.')">
@@ -86,7 +116,11 @@
     </button>
   </div>
 </div>
+
+<!-- MAIN CONTENT -->
 <div class="pb">
+
+  <!-- HERO -->
   <div class="hero">
     <div class="hero-tag">⭐ Trusted Home Services</div>
     <h1>Aapke Ghar Ki <span>Dekhbhal</span> Hamari Zimmedari</h1>
@@ -96,6 +130,8 @@
       <input type="text" placeholder="Service dhundein... (AC, Plumber, Cleaning)" oninput="filterServices(this.value)">
     </div>
   </div>
+
+  <!-- BANNER -->
   <div class="banner" onclick="openModal('Koi Bhi Service')">
     <div class="banner-text">
       <div class="tag">🎉 Limited Offer</div>
@@ -105,6 +141,8 @@
     </div>
     <div class="banner-icon">🏠</div>
   </div>
+
+  <!-- CATEGORIES -->
   <div class="section">
     <div class="section-title">Categories</div>
     <div class="cats">
@@ -116,38 +154,63 @@
       <div class="cat" onclick="filterCat('painting', this)">Painting</div>
     </div>
   </div>
+
+  <!-- SERVICES -->
   <div class="section">
     <div class="section-title">Popular Services</div>
-    <div class="services-grid" id="servicesGrid"></div>
+    <div class="services-grid" id="servicesGrid">
+      <!-- Cards injected by JS -->
+    </div>
   </div>
+
+  <!-- HOW IT WORKS -->
   <div class="how">
     <h2>Kaise Kaam Karta Hai?</h2>
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-text"><h4>Service Chunein</h4><p>Apni zaroorat ki service select karein</p></div>
+      <div class="step-text">
+        <h4>Service Chunein</h4>
+        <p>Apni zaroorat ki service select karein</p>
+      </div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-text"><h4>Book Karein</h4><p>Naam, address aur time batayein</p></div>
+      <div class="step-text">
+        <h4>Book Karein</h4>
+        <p>Naam, address aur time batayein</p>
+      </div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-text"><h4>WhatsApp Confirmation</h4><p>Hamare expert se seedha baat karein</p></div>
+      <div class="step-text">
+        <h4>WhatsApp Confirmation</h4>
+        <p>Hamare expert se seedha baat karein</p>
+      </div>
     </div>
     <div class="step">
       <div class="step-num">4</div>
-      <div class="step-text"><h4>Kaam Ho Gaya!</h4><p>Professional service guaranteed</p></div>
+      <div class="step-text">
+        <h4>Kaam Ho Gaya!</h4>
+        <p>Professional service guaranteed</p>
+      </div>
     </div>
   </div>
-</head><button class="wa-float" onclick="openWhatsApp('Namaste! Mujhe HomeXpert ki service chahiye.')">
+
+</div>
+
+<!-- WHATSAPP FLOAT -->
+<button class="wa-float" onclick="openWhatsApp('Namaste! Mujhe HomeXpert ki service chahiye.')">
   💬 WhatsApp Karein
 </button>
+
+<!-- BOOKING MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
   <div class="modal">
     <div class="modal-handle"></div>
     <button class="close-btn" onclick="closeModal()">×</button>
     <h2>Booking Karein</h2>
     <div class="service-name" id="selectedService">Service Name</div>
+    
     <div class="form-group">
       <label>Aapka Naam *</label>
       <input type="text" id="custName" placeholder="Jaise: Rahul Sharma">
@@ -168,11 +231,14 @@
       <label>Koi Khaas Baat? (Optional)</label>
       <input type="text" id="custNote" placeholder="Jaise: 2nd floor, no lift">
     </div>
+    
     <button class="wa-submit" onclick="submitBooking()">
       ✅ WhatsApp Par Bhejein
     </button>
   </div>
 </div>
+
+<!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <div class="nav-item active">
     <div class="nav-icon">🏠</div>
@@ -190,8 +256,11 @@
     <div class="nav-icon">👤</div>
     <span>Contact</span>
   </div>
-</div><script>
+</div>
+
+<script>
 const WHATSAPP = '919657525142';
+
 const services = [
   { id:1, name:'Deep Cleaning', emoji:'🧹', price:'₹799', old:'₹999', rating:'⭐4.8 (124)', cat:'cleaning', bg:'linear-gradient(135deg,#FF6B2B,#FF8C55)' },
   { id:2, name:'AC Repair', emoji:'❄️', price:'₹599', old:'₹799', rating:'⭐4.9 (89)', cat:'repair', bg:'linear-gradient(135deg,#2196F3,#64B5F6)' },
@@ -202,17 +271,21 @@ const services = [
   { id:7, name:'Bathroom Clean', emoji:'🚿', price:'₹499', old:'₹649', rating:'⭐4.8 (98)', cat:'cleaning', bg:'linear-gradient(135deg,#00BCD4,#80DEEA)' },
   { id:8, name:'Carpenter', emoji:'🪚', price:'₹549', old:'₹699', rating:'⭐4.6 (112)', cat:'repair', bg:'linear-gradient(135deg,#795548,#A1887F)' },
 ];
+
 let currentCat = 'all';
 let currentSearch = '';
+
 function renderServices() {
   const grid = document.getElementById('servicesGrid');
   let filtered = services;
   if(currentCat !== 'all') filtered = filtered.filter(s => s.cat === currentCat);
   if(currentSearch) filtered = filtered.filter(s => s.name.toLowerCase().includes(currentSearch.toLowerCase()));
+  
   if(filtered.length === 0) {
     grid.innerHTML = '<p style="color:#666;font-size:14px;grid-column:span 2;text-align:center;padding:20px">Koi service nahi mili</p>';
     return;
   }
+  
   grid.innerHTML = filtered.map(s => `
     <div class="service-card">
       <div class="service-img" style="background:${s.bg}">${s.emoji}</div>
@@ -225,30 +298,37 @@ function renderServices() {
     </div>
   `).join('');
 }
+
 function filterCat(cat, el) {
   currentCat = cat;
   document.querySelectorAll('.cat').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
   renderServices();
 }
+
 function filterServices(val) {
   currentSearch = val;
   renderServices();
 }
+
 function openModal(serviceName) {
   document.getElementById('selectedService').textContent = serviceName;
   document.getElementById('modalOverlay').classList.add('open');
+  // Set default time to tomorrow
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   tomorrow.setHours(10, 0, 0, 0);
   document.getElementById('custTime').value = tomorrow.toISOString().slice(0,16);
 }
+
 function closeModal() {
   document.getElementById('modalOverlay').classList.remove('open');
 }
+
 function closeModalOutside(e) {
   if(e.target === document.getElementById('modalOverlay')) closeModal();
 }
+
 function submitBooking() {
   const name = document.getElementById('custName').value.trim();
   const phone = document.getElementById('custPhone').value.trim();
@@ -256,22 +336,36 @@ function submitBooking() {
   const time = document.getElementById('custTime').value;
   const note = document.getElementById('custNote').value.trim();
   const service = document.getElementById('selectedService').textContent;
+
   if(!name || !phone || !address || !time) {
     alert('Kripya sab zaroori fields bharein ⚠️');
     return;
   }
+
   const timeStr = time ? new Date(time).toLocaleString('hi-IN') : '';
-  const msg = `🏠 *HomeXpert - Nayi Booking!*\n\n🔧 *Service:* ${service}\n👤 *Naam:* ${name}\n📱 *Mobile:* ${phone}\n📍 *Pata:* ${address}\n🕐 *Samay:* ${timeStr}\n${note ? `📝 *Note:* ${note}` : ''}\n\n_HomeXpert App se bheja gaya_`;
+  
+  const msg = `🏠 *HomeXpert - Nayi Booking!*
+
+🔧 *Service:* ${service}
+👤 *Naam:* ${name}
+📱 *Mobile:* ${phone}
+📍 *Pata:* ${address}
+🕐 *Samay:* ${timeStr}
+${note ? `📝 *Note:* ${note}` : ''}
+
+_HomeXpert App se bheja gaya_`;
+
   openWhatsApp(msg);
   closeModal();
 }
+
 function openWhatsApp(msg) {
   const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank');
 }
+
+// Init
 renderServices();
 </script>
 </body>
 </html>
-  .banner-btn { background: white; color: var(--orange); border: none; border-radius: 25px; padding: 10px 18px; font-weight: 700; font-size: 13px; cursor: pointer; white-space: nowrap; margin-top: 12px; display: inline-block; }
-  .banner-icon { font-size: 50px; opacity: 0.9; }
